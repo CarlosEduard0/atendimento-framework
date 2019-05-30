@@ -1,0 +1,19 @@
+package br.ufrn.imd.atendimentoframwork.service.interfaces;
+
+import br.ufrn.imd.atendimentoframwork.model.Guiche;
+
+import java.util.List;
+
+public interface GuicheService {
+    List<Guiche> findAll();
+
+    Guiche findById(Long id);
+
+    Guiche save(Guiche guiche);
+
+    void update(Guiche guiche);
+
+    void delete(Guiche guiche);
+
+    void deleteById(Long id);
+}
