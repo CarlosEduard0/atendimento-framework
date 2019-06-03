@@ -9,6 +9,8 @@ public interface PessoaService {
 
     Pessoa findById(Long id);
 
+    Pessoa findByCpf(String cpf);
+
     Pessoa save(Pessoa pessoa);
 
     void update(Pessoa pessoa);

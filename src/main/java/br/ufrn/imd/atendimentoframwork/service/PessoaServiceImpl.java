@@ -27,6 +27,10 @@ public class PessoaServiceImpl implements PessoaService {
         return pessoaRepository.findById(id).get();
     }
 
+    public Pessoa findByCpf(String cpf) {
+        return pessoaRepository.findByCpf(cpf);
+    }
+
     @Override
     public Pessoa save(Pessoa pessoa) {
         return pessoaRepository.save(pessoa);

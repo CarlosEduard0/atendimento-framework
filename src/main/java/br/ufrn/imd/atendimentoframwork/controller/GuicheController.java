@@ -39,6 +39,12 @@ public class GuicheController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("{id}/ativar")
+    public ResponseEntity<?> ativar(@PathVariable("id") Long id) {
+        guicheService.ativar(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         guicheService.deleteById(id);

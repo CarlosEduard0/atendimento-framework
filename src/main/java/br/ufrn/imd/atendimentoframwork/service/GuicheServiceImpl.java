@@ -46,4 +46,23 @@ public class GuicheServiceImpl implements GuicheService {
     public void deleteById(Long id) {
         guicheRepository.deleteById(id);
     }
+
+    @Override
+    public void ativar(Long id) {
+        Guiche guiche = guicheRepository.findById(id).get();
+        guiche.setAtivo(true);
+        update(guiche);
+    }
+
+    @Override
+    public Guiche getMelhorGuiche() {
+        List<Guiche> guichesAtivos = guicheRepository.findByAtivoTrue();
+        Guiche guiche = guichesAtivos.get(0);
+        for(Guiche g : guichesAtivos) {
+            if(g.getSenhas().size() < guiche.getSenhas().size()) {
+                guiche = g;
+            }
+        }
+        return guiche;
+    }
 }

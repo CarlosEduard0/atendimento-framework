@@ -16,4 +16,8 @@ public interface GuicheService {
     void delete(Guiche guiche);
 
     void deleteById(Long id);
+
+    void ativar(Long id);
+
+    Guiche getMelhorGuiche();
 }
