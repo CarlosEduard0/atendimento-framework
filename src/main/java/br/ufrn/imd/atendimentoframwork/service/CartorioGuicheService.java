@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GuicheServiceImpl implements GuicheService {
+public class CartorioGuicheService implements GuicheService {
     private final GuicheRepository guicheRepository;
 
     @Autowired
-    public GuicheServiceImpl(GuicheRepository guicheRepository) {
+    public CartorioGuicheService(GuicheRepository guicheRepository) {
         this.guicheRepository = guicheRepository;
     }
 

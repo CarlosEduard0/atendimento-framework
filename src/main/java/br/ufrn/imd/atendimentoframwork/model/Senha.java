@@ -7,11 +7,21 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Senha extends EntidadeAbstrata {
+    @ManyToOne
+    private TipoServico tipoServico;
     @ManyToOne(optional = false)
     private Pessoa pessoa;
     @JsonIgnore
     @ManyToOne(optional = false)
     private Guiche guiche;
+
+    public TipoServico getTipoServico() {
+        return tipoServico;
+    }
+
+    public void setTipoServico(TipoServico tipoServico) {
+        this.tipoServico = tipoServico;
+    }
 
     public Pessoa getPessoa() {
         return pessoa;

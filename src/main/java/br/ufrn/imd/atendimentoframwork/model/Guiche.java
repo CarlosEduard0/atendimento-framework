@@ -1,6 +1,7 @@
 package br.ufrn.imd.atendimentoframwork.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import java.util.List;
 public class Guiche extends EntidadeAbstrata {
     private String nome;
     private boolean ativo;
+    @ManyToOne
+    private TipoServico tipoServico;
     @OneToMany(mappedBy = "guiche")
     private List<Senha> senhas;
 
@@ -25,6 +28,14 @@ public class Guiche extends EntidadeAbstrata {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public TipoServico getTipoServico() {
+        return tipoServico;
+    }
+
+    public void setTipoServico(TipoServico tipoServico) {
+        this.tipoServico = tipoServico;
     }
 
     public List<Senha> getSenhas() {
