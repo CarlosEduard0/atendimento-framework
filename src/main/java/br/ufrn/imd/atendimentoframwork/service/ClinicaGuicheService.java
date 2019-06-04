@@ -1,21 +1,20 @@
 package br.ufrn.imd.atendimentoframwork.service;
 
+import br.ufrn.imd.atendimentoframwork.exception.GuicheJaExisteException;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.model.Senha;
 import br.ufrn.imd.atendimentoframwork.model.TipoServico;
 import br.ufrn.imd.atendimentoframwork.repository.GuicheRepository;
 import br.ufrn.imd.atendimentoframwork.service.interfaces.GuicheService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CartorioGuicheService implements GuicheService {
+public class ClinicaGuicheService implements GuicheService {
     private final GuicheRepository guicheRepository;
 
-    @Autowired
-    public CartorioGuicheService(GuicheRepository guicheRepository) {
+    public ClinicaGuicheService(GuicheRepository guicheRepository) {
         this.guicheRepository = guicheRepository;
     }
 
@@ -31,6 +30,9 @@ public class CartorioGuicheService implements GuicheService {
 
     @Override
     public Guiche save(Guiche guiche) {
+        if(guicheRepository.findByTipoServico(guiche.getTipoServico()).size() > 0) {
+            throw new GuicheJaExisteException("Já existe um guichê com esse tipo de serviço.");
+        }
         return guicheRepository.save(guiche);
     }
 
@@ -58,13 +60,6 @@ public class CartorioGuicheService implements GuicheService {
 
     @Override
     public Guiche getMelhorGuiche(TipoServico tipoServico) {
-        List<Guiche> guichesAtivos = guicheRepository.findByAtivoTrue();
-        Guiche guiche = guichesAtivos.get(0);
-        for(Guiche g : guichesAtivos) {
-            if(g.getSenhas().size() < guiche.getSenhas().size()) {
-                guiche = g;
-            }
-        }
-        return guiche;
+        return guicheRepository.findByAtivoTrueAndTipoServico(tipoServico).get(0);
     }
 }

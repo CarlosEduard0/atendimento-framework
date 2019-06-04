@@ -3,6 +3,7 @@ package br.ufrn.imd.atendimentoframwork.controller;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.service.interfaces.GuicheService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ public class GuicheController {
     private final GuicheService guicheService;
 
     @Autowired
-    public GuicheController(GuicheService guicheService) {
+    public GuicheController(@Qualifier("clinicaGuicheService") GuicheService guicheService) {
         this.guicheService = guicheService;
     }
 

@@ -7,6 +7,7 @@ import br.ufrn.imd.atendimentoframwork.service.interfaces.GuicheService;
 import br.ufrn.imd.atendimentoframwork.service.interfaces.PessoaService;
 import br.ufrn.imd.atendimentoframwork.service.interfaces.SenhaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +17,7 @@ public class SenhaServiceImpl implements SenhaService {
     private final GuicheService guicheService;
 
     @Autowired
-    public SenhaServiceImpl(SenhaRepository senhaRepository, PessoaService pessoaService, GuicheService guicheService) {
+    public SenhaServiceImpl(SenhaRepository senhaRepository, PessoaService pessoaService, @Qualifier("clinicaGuicheService") GuicheService guicheService) {
         this.senhaRepository = senhaRepository;
         this.pessoaService = pessoaService;
         this.guicheService = guicheService;
@@ -30,7 +31,7 @@ public class SenhaServiceImpl implements SenhaService {
         } else {
             pessoaService.save(senha.getPessoa());
         }
-        senha.setGuiche(guicheService.getMelhorGuiche());
+        senha.setGuiche(guicheService.getMelhorGuiche(senha.getTipoServico()));
         return senhaRepository.save(senha);
     }
 }
