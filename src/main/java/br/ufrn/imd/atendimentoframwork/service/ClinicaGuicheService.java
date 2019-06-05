@@ -1,8 +1,7 @@
 package br.ufrn.imd.atendimentoframwork.service;
 
-import br.ufrn.imd.atendimentoframwork.exception.GuicheJaExisteException;
+import br.ufrn.imd.atendimentoframwork.exception.GuicheException;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
-import br.ufrn.imd.atendimentoframwork.model.Senha;
 import br.ufrn.imd.atendimentoframwork.model.TipoServico;
 import br.ufrn.imd.atendimentoframwork.repository.GuicheRepository;
 import br.ufrn.imd.atendimentoframwork.service.interfaces.GuicheService;
@@ -31,7 +30,7 @@ public class ClinicaGuicheService implements GuicheService {
     @Override
     public Guiche save(Guiche guiche) {
         if(guicheRepository.findByTipoServico(guiche.getTipoServico()).size() > 0) {
-            throw new GuicheJaExisteException("Já existe um guichê com esse tipo de serviço.");
+            throw new GuicheException("Já existe um guichê com esse tipo de serviço.");
         }
         return guicheRepository.save(guiche);
     }

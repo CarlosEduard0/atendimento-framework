@@ -1,7 +1,6 @@
 package br.ufrn.imd.atendimentoframwork.service.interfaces;
 
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
-import br.ufrn.imd.atendimentoframwork.model.Senha;
 import br.ufrn.imd.atendimentoframwork.model.TipoServico;
 
 import java.util.List;

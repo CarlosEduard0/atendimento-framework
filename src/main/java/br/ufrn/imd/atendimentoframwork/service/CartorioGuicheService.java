@@ -1,5 +1,6 @@
 package br.ufrn.imd.atendimentoframwork.service;
 
+import br.ufrn.imd.atendimentoframwork.exception.GuicheException;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.model.Senha;
 import br.ufrn.imd.atendimentoframwork.model.TipoServico;
