@@ -4,6 +4,7 @@ import br.ufrn.imd.atendimentoframwork.exception.GuicheException;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.model.TipoServico;
 import br.ufrn.imd.atendimentoframwork.repository.GuicheRepository;
+import br.ufrn.imd.atendimentoframwork.repository.SenhaRepository;
 import br.ufrn.imd.atendimentoframwork.service.interfaces.GuicheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Service;
 public class ClinicaGuicheService extends GuicheService {
 
     @Autowired
-    public ClinicaGuicheService(GuicheRepository guicheRepository) {
-        super(guicheRepository);
+    public ClinicaGuicheService(GuicheRepository guicheRepository , SenhaRepository senhaRepository) {
+        super(guicheRepository, senhaRepository);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class CartorioGuicheService extends GuicheService {
 
     @Autowired
     public CartorioGuicheService(GuicheRepository guicheRepository, SenhaRepository senhaRepository) {
-        super(guicheRepository);
+        super(guicheRepository, senhaRepository);
         this.senhaRepository = senhaRepository;
     }
 

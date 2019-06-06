@@ -4,14 +4,17 @@ import br.ufrn.imd.atendimentoframwork.exception.GuicheException;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.model.TipoServico;
 import br.ufrn.imd.atendimentoframwork.repository.GuicheRepository;
+import br.ufrn.imd.atendimentoframwork.repository.SenhaRepository;
 
 import java.util.List;
 
 public abstract class GuicheService {
     protected final GuicheRepository guicheRepository;
+    protected final SenhaRepository senhaRepository;
 
-    protected GuicheService(GuicheRepository guicheRepository) {
+    protected GuicheService(GuicheRepository guicheRepository, SenhaRepository senhaRepository) {
         this.guicheRepository = guicheRepository;
+        this.senhaRepository = senhaRepository;
     }
 
     public List<Guiche> findAll() {
