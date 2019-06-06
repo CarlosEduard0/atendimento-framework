@@ -15,7 +15,7 @@ public class GuicheController {
     private final GuicheService guicheService;
 
     @Autowired
-    public GuicheController(@Qualifier("clinicaGuicheService") GuicheService guicheService) {
+    public GuicheController(@Qualifier("cartorioGuicheService") GuicheService guicheService) {
         this.guicheService = guicheService;
     }
 

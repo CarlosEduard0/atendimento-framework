@@ -1,24 +1,65 @@
 package br.ufrn.imd.atendimentoframwork.service.interfaces;
 
+import br.ufrn.imd.atendimentoframwork.exception.GuicheException;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.model.TipoServico;
+import br.ufrn.imd.atendimentoframwork.repository.GuicheRepository;
 
 import java.util.List;
 
-public interface GuicheService {
-    List<Guiche> findAll();
+public abstract class GuicheService {
+    protected final GuicheRepository guicheRepository;
 
-    Guiche findById(Long id);
+    protected GuicheService(GuicheRepository guicheRepository) {
+        this.guicheRepository = guicheRepository;
+    }
 
-    Guiche save(Guiche guiche);
+    public List<Guiche> findAll() {
+        return guicheRepository.findAll();
+    }
 
-    void update(Guiche guiche);
+    public Guiche findById(Long id) {
+        verificarSeGuicheExiste(id);
+        return guicheRepository.findById(id).get();
+    }
 
-    void delete(Guiche guiche);
+    public Guiche save(Guiche guiche) {
+        return guicheRepository.save(guiche);
+    }
 
-    void deleteById(Long id);
+    public void update(Guiche guiche) {
+        guicheRepository.save(guiche);
+    }
 
-    void ativar(Long id);
+    public void delete(Guiche guiche) {
+        guicheRepository.delete(guiche);
+    }
 
-    Guiche getMelhorGuiche(TipoServico tipoServico);
+    public void deleteById(Long id) {
+        guicheRepository.deleteById(id);
+    }
+
+    public final void ativar(Long id) {
+        Guiche guiche = findById(id);
+        verificarSeGuicheEstaAtivo(guiche);
+        realocarSenhasAoAtivar(guiche);
+        guiche.setAtivo(true);
+        update(guiche);
+    }
+
+    protected abstract void realocarSenhasAoAtivar(Guiche guiche);
+
+    public abstract Guiche getMelhorGuiche(TipoServico tipoServico);
+
+    private void verificarSeGuicheEstaAtivo(Guiche guiche) {
+        if(guiche.isAtivo()) {
+            throw new GuicheException("Esse guichê já está ativo.");
+        }
+    }
+
+    private void verificarSeGuicheExiste(Long id) {
+        if(!guicheRepository.findById(id).isPresent()) {
+            throw new GuicheException("Esse guichê não existe.");
+        }
+    }
 }

@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class SenhaServiceImpl implements SenhaService {
     private final SenhaRepository senhaRepository;
@@ -17,7 +20,7 @@ public class SenhaServiceImpl implements SenhaService {
     private final GuicheService guicheService;
 
     @Autowired
-    public SenhaServiceImpl(SenhaRepository senhaRepository, PessoaService pessoaService, @Qualifier("clinicaGuicheService") GuicheService guicheService) {
+    public SenhaServiceImpl(SenhaRepository senhaRepository, PessoaService pessoaService, @Qualifier("cartorioGuicheService") GuicheService guicheService) {
         this.senhaRepository = senhaRepository;
         this.pessoaService = pessoaService;
         this.guicheService = guicheService;
@@ -32,6 +35,12 @@ public class SenhaServiceImpl implements SenhaService {
             pessoaService.save(senha.getPessoa());
         }
         senha.setGuiche(guicheService.getMelhorGuiche(senha.getTipoServico()));
+        senha.setHorarioChegada(LocalDateTime.now());
         return senhaRepository.save(senha);
+    }
+
+    @Override
+    public void updateAll(List<Senha> senhas) {
+        senhaRepository.saveAll(senhas);
     }
 }
