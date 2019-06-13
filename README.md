@@ -4,7 +4,7 @@ Framework para gerenciar atendimentos
 ## Diagrama de Classes
 ![Diagrama de classes](https://user-images.githubusercontent.com/30722229/59472634-7df24e80-8e15-11e9-8cef-27149c9131f0.png)
 
-## Casos de uso
+## Casos de uso de pontos flexíveis
 ### Caso de uso 1
 ![Caso de uso 1](https://user-images.githubusercontent.com/30722229/59472777-07098580-8e16-11e9-8e12-3e35da7ab475.png)
 
