@@ -15,7 +15,7 @@ public class GuicheController {
     private final GuicheService guicheService;
 
     @Autowired
-    public GuicheController(@Qualifier("cartorioGuicheService") GuicheService guicheService) {
+    public GuicheController(@Qualifier("guicheServiceImpl") GuicheService guicheService) {
         this.guicheService = guicheService;
     }
 
@@ -49,6 +49,13 @@ public class GuicheController {
     @ApiOperation(value = "Faz a ativação do guichê")
     public ResponseEntity<?> ativar(@PathVariable("id") Long id) {
         guicheService.ativar(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("{id}/desativar")
+    @ApiOperation(value = "Desativa um guichê")
+    public ResponseEntity<?> desativar(@PathVariable("id") Long id) {
+        guicheService.desativar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

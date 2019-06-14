@@ -20,7 +20,7 @@ public class SenhaServiceImpl implements SenhaService {
     private final GuicheService guicheService;
 
     @Autowired
-    public SenhaServiceImpl(SenhaRepository senhaRepository, PessoaService pessoaService, @Qualifier("cartorioGuicheService") GuicheService guicheService) {
+    public SenhaServiceImpl(SenhaRepository senhaRepository, PessoaService pessoaService, @Qualifier("guicheServiceImpl") GuicheService guicheService) {
         this.senhaRepository = senhaRepository;
         this.pessoaService = pessoaService;
         this.guicheService = guicheService;
@@ -34,7 +34,7 @@ public class SenhaServiceImpl implements SenhaService {
         } else {
             pessoaService.save(senha.getPessoa());
         }
-        senha.setGuiche(guicheService.getMelhorGuiche(senha.getTipoServico()));
+        senha.setGuiche(guicheService.buscarMelhorGuiche(senha.getTipoServico()));
         senha.setHorarioChegada(LocalDateTime.now());
         return senhaRepository.save(senha);
     }

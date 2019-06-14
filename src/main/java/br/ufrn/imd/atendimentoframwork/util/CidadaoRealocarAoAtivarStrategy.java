@@ -1,27 +1,29 @@
-package br.ufrn.imd.atendimentoframwork.service;
+package br.ufrn.imd.atendimentoframwork.util;
 
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.model.Senha;
-import br.ufrn.imd.atendimentoframwork.model.TipoServico;
 import br.ufrn.imd.atendimentoframwork.repository.GuicheRepository;
 import br.ufrn.imd.atendimentoframwork.repository.SenhaRepository;
-import br.ufrn.imd.atendimentoframwork.service.interfaces.GuicheService;
+import br.ufrn.imd.atendimentoframwork.util.interfaces.RealocarAoAtivarStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class CidadaoGuicheService extends GuicheService {
+@Component
+public class CidadaoRealocarAoAtivarStrategy implements RealocarAoAtivarStrategy {
+    private final GuicheRepository guicheRepository;
+    private final SenhaRepository senhaRepository;
 
     @Autowired
-    public CidadaoGuicheService(GuicheRepository guicheRepository, SenhaRepository senhaRepository) {
-        super(guicheRepository, senhaRepository);
+    public CidadaoRealocarAoAtivarStrategy(GuicheRepository guicheRepository, SenhaRepository senhaRepository) {
+        this.guicheRepository = guicheRepository;
+        this.senhaRepository = senhaRepository;
     }
 
     @Override
-    protected void realocarSenhasAoAtivar(Guiche guiche) {
+    public void realocarSenhasAoAtivar(Guiche guiche) {
         List<Guiche> guichesAtivosDoTipoDeServico = guicheRepository.findByAtivoTrueAndTipoServico(guiche.getTipoServico());
         if(!guichesAtivosDoTipoDeServico.isEmpty()) {
             List<Senha> senhas = new ArrayList<>();
@@ -34,17 +36,5 @@ public class CidadaoGuicheService extends GuicheService {
             }
             senhaRepository.saveAll(senhas);
         }
-    }
-
-    @Override
-    public Guiche getMelhorGuiche(TipoServico tipoServico) {
-        List<Guiche> guichesAtivosEMesmoTipoServico = guicheRepository.findByAtivoTrueAndTipoServico(tipoServico);
-        Guiche guiche = guichesAtivosEMesmoTipoServico.get(0);
-        for(Guiche g : guichesAtivosEMesmoTipoServico) {
-            if(g.getSenhas().size() < guiche.getSenhas().size()) {
-                guiche = g;
-            }
-        }
-        return guiche;
     }
 }
