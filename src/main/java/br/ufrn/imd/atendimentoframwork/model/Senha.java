@@ -3,6 +3,8 @@ package br.ufrn.imd.atendimentoframwork.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
@@ -16,6 +18,8 @@ public class Senha extends EntidadeAbstrata {
     @JsonIgnore
     @ManyToOne(optional = false)
     private Guiche guiche;
+    @Enumerated(EnumType.STRING)
+    private SenhaStatus status;
 
     public Pessoa getPessoa() {
         return pessoa;
@@ -47,5 +51,13 @@ public class Senha extends EntidadeAbstrata {
 
     public void setGuiche(Guiche guiche) {
         this.guiche = guiche;
+    }
+
+    public SenhaStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(SenhaStatus status) {
+        this.status = status;
     }
 }

@@ -23,7 +23,7 @@ public class CidadaoBuscarMelhorGuicheStrategy implements BuscarMelhorGuicheStra
         List<Guiche> guichesAtivosEMesmoTipoServico = guicheRepository.findByAtivoTrueAndTipoServico(tipoServico);
         Guiche guiche = guichesAtivosEMesmoTipoServico.get(0);
         for(Guiche g : guichesAtivosEMesmoTipoServico) {
-            if(g.getSenhas().size() < guiche.getSenhas().size()) {
+            if(g.getSenhasAguardando().size() < guiche.getSenhasAguardando().size()) {
                 guiche = g;
             }
         }

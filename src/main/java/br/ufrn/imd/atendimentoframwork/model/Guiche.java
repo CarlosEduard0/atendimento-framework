@@ -1,9 +1,12 @@
 package br.ufrn.imd.atendimentoframwork.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Guiche extends EntidadeAbstrata {
@@ -40,6 +43,11 @@ public class Guiche extends EntidadeAbstrata {
 
     public List<Senha> getSenhas() {
         return senhas;
+    }
+
+    @JsonIgnore
+    public List<Senha> getSenhasAguardando() {
+        return senhas.stream().filter(s -> s.getStatus() == SenhaStatus.AGUARDANDO).collect(Collectors.toList());
     }
 
     public void setSenhas(List<Senha> senhas) {

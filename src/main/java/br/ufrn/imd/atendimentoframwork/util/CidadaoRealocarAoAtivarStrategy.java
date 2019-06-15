@@ -25,14 +25,15 @@ public class CidadaoRealocarAoAtivarStrategy implements RealocarAoAtivarStrategy
     @Override
     public void realocarSenhasAoAtivar(Guiche guiche) {
         List<Guiche> guichesAtivosDoTipoDeServico = guicheRepository.findByAtivoTrueAndTipoServico(guiche.getTipoServico());
+        guichesAtivosDoTipoDeServico.add(guiche);
         if(!guichesAtivosDoTipoDeServico.isEmpty()) {
             List<Senha> senhas = new ArrayList<>();
             for(Guiche g : guichesAtivosDoTipoDeServico) {
-                senhas.addAll(g.getSenhas());
+                senhas.addAll(g.getSenhasAguardando());
             }
-            int numParts = senhas.size() / (guichesAtivosDoTipoDeServico.size() + 1);
+            int senhasPorGuiche = senhas.size() / guichesAtivosDoTipoDeServico.size();
             for(int i = 0; i < senhas.size(); i++) {
-                senhas.get(i).setGuiche(guichesAtivosDoTipoDeServico.get(i % numParts));
+                senhas.get(i).setGuiche(guichesAtivosDoTipoDeServico.get(i / senhasPorGuiche));
             }
             senhaRepository.saveAll(senhas);
         }

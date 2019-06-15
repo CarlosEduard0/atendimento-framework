@@ -23,7 +23,7 @@ public class CartorioBuscarMelhorGuicheStrategy implements BuscarMelhorGuicheStr
         List<Guiche> guichesAtivos = guicheRepository.findByAtivoTrue();
         Guiche guiche = guichesAtivos.get(0);
         for(Guiche g : guichesAtivos) {
-            if(g.getSenhas().size() < guiche.getSenhas().size()) {
+            if(g.getSenhasAguardando().size() < guiche.getSenhasAguardando().size()) {
                 guiche = g;
             }
         }

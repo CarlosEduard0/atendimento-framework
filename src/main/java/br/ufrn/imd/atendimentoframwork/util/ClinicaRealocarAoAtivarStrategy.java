@@ -7,7 +7,5 @@ import org.springframework.stereotype.Component;
 @Component
 public class ClinicaRealocarAoAtivarStrategy implements RealocarAoAtivarStrategy {
     @Override
-    public void realocarSenhasAoAtivar(Guiche guiche) {
-
-    }
+    public void realocarSenhasAoAtivar(Guiche guiche) {}
 }
