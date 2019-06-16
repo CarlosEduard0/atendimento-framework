@@ -12,7 +12,7 @@
     <artifactId>atendimento-framework-root</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <nome>atendimento-framework-root</nome>
+    <name>atendimento-framework-root</name>
     <description>Framework para gerenciar atendimentos</description>
 
     <properties>
