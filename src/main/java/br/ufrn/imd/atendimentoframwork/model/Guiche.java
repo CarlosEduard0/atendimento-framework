@@ -50,6 +50,10 @@ public class Guiche extends EntidadeAbstrata {
         return senhas.stream().filter(s -> s.getStatus() == SenhaStatus.AGUARDANDO).collect(Collectors.toList());
     }
 
+    public void setSenhasDescatardas() {
+        senhas.forEach(s -> s.setStatus(SenhaStatus.DESCARTADA));
+    }
+
     public void setSenhas(List<Senha> senhas) {
         this.senhas = senhas;
     }

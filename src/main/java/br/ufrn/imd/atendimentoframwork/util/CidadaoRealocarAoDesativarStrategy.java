@@ -3,6 +3,7 @@ package br.ufrn.imd.atendimentoframwork.util;
 import br.ufrn.imd.atendimentoframwork.exception.GuicheException;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.model.Senha;
+import br.ufrn.imd.atendimentoframwork.model.SenhaStatus;
 import br.ufrn.imd.atendimentoframwork.repository.GuicheRepository;
 import br.ufrn.imd.atendimentoframwork.repository.SenhaRepository;
 import br.ufrn.imd.atendimentoframwork.util.interfaces.RealocarAoDesativarStrategy;
@@ -25,15 +26,22 @@ public class CidadaoRealocarAoDesativarStrategy implements RealocarAoDesativarSt
     @Override
     public void realocarSenhasAoDesativar(Guiche guiche) {
         List<Guiche> guichesAtivosETipoServico = guicheRepository.findByAtivoTrueAndTipoServico(guiche.getTipoServico());
-        List<Senha> senhas = guiche.getSenhasAguardando();
+        List<Senha> senhas;
+
         if(guichesAtivosETipoServico.isEmpty()) {
+            guiche.setSenhasDescatardas();
+            senhaRepository.saveAll(guiche.getSenhasAguardando());
+
             throw new GuicheException("Senhas descartadas pois não existe nenhum guichê ativo.");
         } else {
-            int senhasPorGuiche = senhas.size() / guichesAtivosETipoServico.size();
-            for(int i = 0; i < senhas.size(); i++) {
-                senhas.get(i).setGuiche(guichesAtivosETipoServico.get(i / senhasPorGuiche));
-            }
-            senhaRepository.saveAll(senhas);
+             senhas = guiche.getSenhasAguardando();
         }
+
+        int senhasPorGuiche = senhas.size() / guichesAtivosETipoServico.size();
+        for(int i = 0; i < senhas.size(); i++) {
+            senhas.get(i).setGuiche(guichesAtivosETipoServico.get(i / senhasPorGuiche));
+        }
+        senhaRepository.saveAll(senhas);
+
     }
 }
