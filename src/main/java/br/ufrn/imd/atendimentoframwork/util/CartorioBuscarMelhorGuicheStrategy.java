@@ -1,5 +1,6 @@
 package br.ufrn.imd.atendimentoframwork.util;
 
+import br.ufrn.imd.atendimentoframwork.exception.GuicheException;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.model.TipoServico;
 import br.ufrn.imd.atendimentoframwork.repository.GuicheRepository;
@@ -21,12 +22,20 @@ public class CartorioBuscarMelhorGuicheStrategy implements BuscarMelhorGuicheStr
     @Override
     public Guiche buscarMelhorGuiche(TipoServico tipoServico) {
         List<Guiche> guichesAtivos = guicheRepository.findByAtivoTrue();
-        Guiche guiche = guichesAtivos.get(0);
+        Guiche guiche;
+
+        if(guichesAtivos.isEmpty()) {
+            throw new GuicheException("Não há guichês ativos");
+        } else {
+            guiche = guichesAtivos.get(0);
+        }
+
         for(Guiche g : guichesAtivos) {
             if(g.getSenhasAguardando().size() < guiche.getSenhasAguardando().size()) {
                 guiche = g;
             }
         }
+
         return guiche;
     }
 }

@@ -1,5 +1,6 @@
 package br.ufrn.imd.atendimentoframwork.util;
 
+import br.ufrn.imd.atendimentoframwork.exception.GuicheException;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.model.TipoServico;
 import br.ufrn.imd.atendimentoframwork.repository.GuicheRepository;
@@ -21,6 +22,11 @@ public class CidadaoBuscarMelhorGuicheStrategy implements BuscarMelhorGuicheStra
     @Override
     public Guiche buscarMelhorGuiche(TipoServico tipoServico) {
         List<Guiche> guichesAtivosEMesmoTipoServico = guicheRepository.findByAtivoTrueAndTipoServico(tipoServico);
+
+        if(guichesAtivosEMesmoTipoServico.isEmpty()) {
+            throw new GuicheException("Não há guichês ativos");
+        }
+
         Guiche guiche = guichesAtivosEMesmoTipoServico.get(0);
         for(Guiche g : guichesAtivosEMesmoTipoServico) {
             if(g.getSenhasAguardando().size() < guiche.getSenhasAguardando().size()) {

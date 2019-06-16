@@ -1,5 +1,6 @@
 package br.ufrn.imd.atendimentoframwork.service;
 
+import br.ufrn.imd.atendimentoframwork.exception.GuicheException;
 import br.ufrn.imd.atendimentoframwork.model.Pessoa;
 import br.ufrn.imd.atendimentoframwork.model.Senha;
 import br.ufrn.imd.atendimentoframwork.model.SenhaStatus;
@@ -21,7 +22,11 @@ public class SenhaServiceImpl implements SenhaService {
     private final GuicheService guicheService;
 
     @Autowired
-    public SenhaServiceImpl(SenhaRepository senhaRepository, PessoaService pessoaService, @Qualifier("clinicaGuicheService") GuicheService guicheService) {
+    public SenhaServiceImpl(
+            SenhaRepository senhaRepository,
+            PessoaService pessoaService,
+            @Qualifier("clinicaGuicheService") GuicheService guicheService
+    ) {
         this.senhaRepository = senhaRepository;
         this.pessoaService = pessoaService;
         this.guicheService = guicheService;

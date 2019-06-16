@@ -1,11 +1,14 @@
 package br.ufrn.imd.atendimentoframwork.util;
 
+import br.ufrn.imd.atendimentoframwork.exception.GuicheException;
 import br.ufrn.imd.atendimentoframwork.model.Guiche;
 import br.ufrn.imd.atendimentoframwork.model.TipoServico;
 import br.ufrn.imd.atendimentoframwork.repository.GuicheRepository;
 import br.ufrn.imd.atendimentoframwork.util.interfaces.BuscarMelhorGuicheStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class ClinicaBuscarMelhorGuicheStrategy implements BuscarMelhorGuicheStrategy {
@@ -18,6 +21,12 @@ public class ClinicaBuscarMelhorGuicheStrategy implements BuscarMelhorGuicheStra
 
     @Override
     public Guiche buscarMelhorGuiche(TipoServico tipoServico) {
-        return guicheRepository.findByAtivoTrueAndTipoServico(tipoServico).get(0);
+        List<Guiche> guichesAtivosMesmoTipo = guicheRepository.findByAtivoTrueAndTipoServico(tipoServico);
+
+        if(guichesAtivosMesmoTipo.isEmpty()) {
+            throw new GuicheException("Não há guichês ativos");
+        }
+
+        return guichesAtivosMesmoTipo.get(0);
     }
 }

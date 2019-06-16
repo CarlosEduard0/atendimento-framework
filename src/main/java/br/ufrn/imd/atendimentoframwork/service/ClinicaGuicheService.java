@@ -14,7 +14,12 @@ import org.springframework.stereotype.Service;
 public class ClinicaGuicheService extends GuicheServiceImpl {
 
     @Autowired
-    public ClinicaGuicheService(GuicheRepository guicheRepository, @Qualifier("cartorioBuscarMelhorGuicheStrategy") BuscarMelhorGuicheStrategy buscarMelhorGuicheStrategy, @Qualifier("cartorioRealocarAoAtivarStrategy") RealocarAoAtivarStrategy realocarAoAtivarStrategy, @Qualifier("cartorioRealocarAoDesativarStrategy") RealocarAoDesativarStrategy realocarAoDesativarStrategy) {
+    public ClinicaGuicheService(
+            GuicheRepository guicheRepository,
+            @Qualifier("clinicaBuscarMelhorGuicheStrategy") BuscarMelhorGuicheStrategy buscarMelhorGuicheStrategy,
+            @Qualifier("clinicaRealocarAoAtivarStrategy") RealocarAoAtivarStrategy realocarAoAtivarStrategy,
+            @Qualifier("clinicaRealocarAoDesativarStrategy") RealocarAoDesativarStrategy realocarAoDesativarStrategy
+    ) {
         super(guicheRepository, buscarMelhorGuicheStrategy, realocarAoAtivarStrategy, realocarAoDesativarStrategy);
     }
 
