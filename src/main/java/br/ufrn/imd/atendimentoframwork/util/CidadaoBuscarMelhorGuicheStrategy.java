@@ -22,7 +22,6 @@ public class CidadaoBuscarMelhorGuicheStrategy implements BuscarMelhorGuicheStra
     @Override
     public Guiche buscarMelhorGuiche(TipoServico tipoServico) {
         List<Guiche> guichesAtivosEMesmoTipoServico = guicheRepository.findByAtivoTrueAndTipoServico(tipoServico);
-
         if(guichesAtivosEMesmoTipoServico.isEmpty()) {
             throw new GuicheException("Não há guichês ativos");
         }

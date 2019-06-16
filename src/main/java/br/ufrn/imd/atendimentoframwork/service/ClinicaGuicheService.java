@@ -14,18 +14,16 @@ import org.springframework.stereotype.Service;
 public class ClinicaGuicheService extends GuicheServiceImpl {
 
     @Autowired
-    public ClinicaGuicheService(
-            GuicheRepository guicheRepository,
-            @Qualifier("clinicaBuscarMelhorGuicheStrategy") BuscarMelhorGuicheStrategy buscarMelhorGuicheStrategy,
-            @Qualifier("clinicaRealocarAoAtivarStrategy") RealocarAoAtivarStrategy realocarAoAtivarStrategy,
-            @Qualifier("clinicaRealocarAoDesativarStrategy") RealocarAoDesativarStrategy realocarAoDesativarStrategy
-    ) {
+    public ClinicaGuicheService(GuicheRepository guicheRepository,
+                                @Qualifier("clinicaBuscarMelhorGuicheStrategy") BuscarMelhorGuicheStrategy buscarMelhorGuicheStrategy,
+                                @Qualifier("clinicaRealocarAoAtivarStrategy") RealocarAoAtivarStrategy realocarAoAtivarStrategy,
+                                @Qualifier("clinicaRealocarAoDesativarStrategy") RealocarAoDesativarStrategy realocarAoDesativarStrategy) {
         super(guicheRepository, buscarMelhorGuicheStrategy, realocarAoAtivarStrategy, realocarAoDesativarStrategy);
     }
 
     @Override
     public Guiche save(Guiche guiche) {
-        if(guicheRepository.findByTipoServico(guiche.getTipoServico()).size() > 0) {
+        if (!guicheRepository.findByTipoServico(guiche.getTipoServico()).isEmpty()) {
             throw new GuicheException("Já existe um guichê com esse tipo de serviço.");
         }
         return super.save(guiche);

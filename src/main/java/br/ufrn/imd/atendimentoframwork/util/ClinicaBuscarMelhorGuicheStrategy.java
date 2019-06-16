@@ -22,8 +22,7 @@ public class ClinicaBuscarMelhorGuicheStrategy implements BuscarMelhorGuicheStra
     @Override
     public Guiche buscarMelhorGuiche(TipoServico tipoServico) {
         List<Guiche> guichesAtivosMesmoTipo = guicheRepository.findByAtivoTrueAndTipoServico(tipoServico);
-
-        if(guichesAtivosMesmoTipo.isEmpty()) {
+        if (guichesAtivosMesmoTipo.isEmpty()) {
             throw new GuicheException("Não há guichês ativos");
         }
 

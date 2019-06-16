@@ -24,20 +24,16 @@ public class CartorioRealocarAoDesativarStrategy implements RealocarAoDesativarS
     @Override
     public void realocarSenhasAoDesativar(Guiche guiche) {
         List<Guiche> guichesAtivos = guicheRepository.findByAtivoTrue();
-        List<Senha> senhas = guiche.getSenhasAguardando();
-
         if(guichesAtivos.isEmpty()) {
-            guiche.setSenhasDescatardas();
-            senhaRepository.saveAll(guiche.getSenhasAguardando());
-
+            senhaRepository.descartarSenhas(guiche.getSenhasAguardando());
             throw new GuicheException("Senhas descartadas pois não existe nenhum guichê ativo.");
         }
 
+        List<Senha> senhas = guiche.getSenhasAguardando();
         int senhasPorGuiche = senhas.size() / guichesAtivos.size();
         for(int i = 0; i < senhas.size(); i++) {
             senhas.get(i).setGuiche(guichesAtivos.get(i / senhasPorGuiche));
         }
         senhaRepository.saveAll(senhas);
-
     }
 }

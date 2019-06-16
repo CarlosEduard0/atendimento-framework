@@ -22,20 +22,16 @@ public class CartorioBuscarMelhorGuicheStrategy implements BuscarMelhorGuicheStr
     @Override
     public Guiche buscarMelhorGuiche(TipoServico tipoServico) {
         List<Guiche> guichesAtivos = guicheRepository.findByAtivoTrue();
-        Guiche guiche;
-
-        if(guichesAtivos.isEmpty()) {
+        if (guichesAtivos.isEmpty()) {
             throw new GuicheException("Não há guichês ativos");
-        } else {
-            guiche = guichesAtivos.get(0);
         }
 
-        for(Guiche g : guichesAtivos) {
-            if(g.getSenhasAguardando().size() < guiche.getSenhasAguardando().size()) {
+        Guiche guiche = guichesAtivos.get(0);
+        for (Guiche g : guichesAtivos) {
+            if (g.getSenhasAguardando().size() < guiche.getSenhasAguardando().size()) {
                 guiche = g;
             }
         }
-
         return guiche;
     }
 }

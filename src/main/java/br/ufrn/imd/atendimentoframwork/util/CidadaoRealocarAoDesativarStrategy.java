@@ -26,22 +26,16 @@ public class CidadaoRealocarAoDesativarStrategy implements RealocarAoDesativarSt
     @Override
     public void realocarSenhasAoDesativar(Guiche guiche) {
         List<Guiche> guichesAtivosETipoServico = guicheRepository.findByAtivoTrueAndTipoServico(guiche.getTipoServico());
-        List<Senha> senhas;
-
         if(guichesAtivosETipoServico.isEmpty()) {
-            guiche.setSenhasDescatardas();
-            senhaRepository.saveAll(guiche.getSenhasAguardando());
-
+            senhaRepository.descartarSenhas(guiche.getSenhasAguardando());
             throw new GuicheException("Senhas descartadas pois não existe nenhum guichê ativo.");
-        } else {
-             senhas = guiche.getSenhasAguardando();
         }
 
+        List<Senha> senhas = guiche.getSenhasAguardando();
         int senhasPorGuiche = senhas.size() / guichesAtivosETipoServico.size();
         for(int i = 0; i < senhas.size(); i++) {
             senhas.get(i).setGuiche(guichesAtivosETipoServico.get(i / senhasPorGuiche));
         }
         senhaRepository.saveAll(senhas);
-
     }
 }

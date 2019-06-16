@@ -18,7 +18,6 @@ public class ClinicaRealocarAoDesativarStrategy implements RealocarAoDesativarSt
 
     @Override
     public void realocarSenhasAoDesativar(Guiche guiche) {
-        guiche.setSenhasDescatardas();
-        senhaRepository.saveAll(guiche.getSenhasAguardando());
+        senhaRepository.descartarSenhas(guiche.getSenhasAguardando());
     }
 }
