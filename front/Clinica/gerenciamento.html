@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -22,37 +26,67 @@
         <div class="row">
             <div class="col-md-12" style="height: 100%;">
                 <br>
-                <h2>Guichês <span style="position: relative; left: 70%;"><button type="button" data-toggle="modal"
+                <h2>Guichês <span style="position: relative; left: 75%;"><button type="button" data-toggle="modal"
                             data-target="#exampleModal" class="btn btn-primary">
                             Cadastrar guichê</button></span></h2>
                 <br>
-                <table class="table table-bordered table-hover">
+                <table id="table-guiches" class="table table-bordered table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Ações</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td style="width: 70%">Guichê 1</td>
-                            <td><button type="button" class="btn btn-success">
-                                    Ativar</button>
-                                <button type="button" class="btn btn-danger">
-                                    Desativar</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Guichê 1</td>
-                            <td><button type="button" class="btn btn-success">
-                                    Ativar</button>
-                                <button type="button" class="btn btn-danger">
-                                    Desativar</button></td>
-                        </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12" style="height: 100%;">
+                <br>
+                <h2>Tipos de Serviço <span style="position: relative; left: 65%;"><button type="button"
+                            data-toggle="modal" data-target="#tiposServicos" class="btn btn-primary">
+                            Cadastrar tipo</button></span></h2>
+                <br>
+                <table id="table-tiposServicos" class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="tiposServicos" tabindex="-1" role="dialog" aria-labelledby="tiposServicosLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="form-tipo">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tiposServicosLabel">Cadastrar Tipo de Serviço</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nometipo">Descrição</label>
+                            <input type="text" class="form-control" id="nometipo" placeholder="descrição" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -60,31 +94,194 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <form id="form-guiche">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cadastrar guichê</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nomeguiche">Nome do guichê</label>
+                            <input type="text" class="form-control" id="nomeguiche" placeholder="Nome" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="versenhas" tabindex="-1" role="dialog" aria-labelledby="versenhasLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cadastrar guichê</h5>
+                    <h5 class="modal-title" id="versenhasLabel">Senhas</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="nomeguiche">Nome do guichê</label>
-                        <input type="text" class="form-control" id="nomeguiche" placeholder="Nome">
-                    </div>
+                    <table id="table-senhas" class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Pessoa</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Cadastrar</button>
                 </div>
             </div>
         </div>
     </div>
-    <nav class="navbar fixed-bottom navbar-dark bg-dark" style="display: block; text-align: center; color: white; height: 40px">
+    <nav class="navbar fixed-bottom navbar-dark bg-dark"
+        style="display: block; text-align: center; color: white; height: 40px">
         <p>© PEG softwares</p>
     </nav>
 
     <script type="text/javascript">
-       
+        const url = 'http://localhost:8080/';
+        $('#form-guiche').submit(function () {
+            console.log("Cadastrando guichê");
+            const data = {
+                nome: $("#nomeguiche").val()
+            }
+            axios.post(url + "guiches/", data)
+                .then(function (res) {
+                    const { id, status } = res.data;
+                    $("#nomeguiche").val(null);
+                    console.log(res);
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao cadastrar guichê");
+                });
+            return false;
+        });
+        $('#form-tipo').submit(function () {
+            console.log("teste");
+            const data = {
+                descricao: $("#nometipo").val()
+            }
+            axios.post(url + "tiposServicos/", data)
+                .then(function (res) {
+                    const { id, status } = res.data;
+                    $("#nometipo").val(null);
+                    console.log(res);
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao cadastrar tipo");
+                });
+            return false;
+        });
+        function verSenhas(senhas) {
+            $("#versenhas").modal('show');
+            if (senhas) {
+                const table = $("#table-senhas");
+                var id = $('#versenhas tr').each(function () { $(this).find("td").text()[0]; });
+                if (id.length === 1) {
+                    senhas.forEach(element => {
+                        table.append(`
+                            <tr>
+                                <td>${element.id}</td>
+                                <td style="width: 70%">${element.pessoa.nome}</td>
+                                <td style="width: 70%">${element.status}</td>
+                            </tr>
+                        `);
+                    });
+                }
+            }
+        }
+        function ativarGuiche(id) {
+            axios.put(url + "guiches/" + id + "/ativar")
+                .then(function (res) {
+                    alert("Guichê ativado");
+                    console.log(res);
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao ativar guichê");
+                });
+        }
+        function desativarGuiche(id) {
+            axios.put(url + "guiches/" + id + "/desativar")
+                .then(function (res) {
+                    alert("Guichê desativado");
+                    console.log(res);
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao desativar guichê");
+                });
+        }
+        function listar() {
+            axios.get(url + "guiches/")
+                .then(function (res) {
+                    console.log(res.data);
+                    const table = $("#table-guiches");
+                    res.data.forEach(element => {
+                        table.append(`
+                            <tr>
+                                <td>${element.id}</td>
+                                <td style="width: 70%">${element.nome}</td>
+                                <td>
+                                    ${ element.ativo ? `
+                                        <button type="button" class="btn btn-danger" onclick='desativarGuiche(${element.id})'>
+                                        Desativar</button>
+                                    ` : `
+                                    <button type="button" class="btn btn-success" onclick='ativarGuiche(${element.id})'>
+                                        Ativar</button>
+                                    `}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-success" onclick='verSenhas(${JSON.stringify(element.senhas)})'>
+                                        Ver Senhas</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao listar guichês");
+                });
+        }
+        listar();
+        function listarTipos() {
+            axios.get(url + "tiposServicos/")
+                .then(function (res) {
+                    console.log(res.data);
+                    const table = $("#table-tiposServicos");
+                    res.data.forEach(element => {
+                        table.append(`
+                            <tr>
+                                <td>${element.id}</td>
+                                <td style="width: 70%">${element.descricao}</td>
+                            </tr>
+                        `);
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao listar tipos");
+                });
+        }
+        listarTipos();
     </script>
 </body>
 
