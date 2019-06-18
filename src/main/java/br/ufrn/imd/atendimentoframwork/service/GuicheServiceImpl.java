@@ -20,7 +20,10 @@ public class GuicheServiceImpl implements GuicheService {
     private final RealocarAoAtivarStrategy realocarAoAtivarStrategy;
     private final RealocarAoDesativarStrategy realocarAoDesativarStrategy;
 
-    public GuicheServiceImpl(GuicheRepository guicheRepository, @Qualifier("clinicaBuscarMelhorGuicheStrategy") BuscarMelhorGuicheStrategy buscarMelhorGuicheStrategy, @Qualifier("clinicaRealocarAoAtivarStrategy") RealocarAoAtivarStrategy realocarAoAtivarStrategy, @Qualifier("clinicaRealocarAoDesativarStrategy") RealocarAoDesativarStrategy realocarAoDesativarStrategy) {
+    public GuicheServiceImpl(GuicheRepository guicheRepository,
+                             @Qualifier("cidadaoBuscarMelhorGuicheStrategy") BuscarMelhorGuicheStrategy buscarMelhorGuicheStrategy,
+                             @Qualifier("cidadaoRealocarAoAtivarStrategy") RealocarAoAtivarStrategy realocarAoAtivarStrategy,
+                             @Qualifier("cidadaoRealocarAoDesativarStrategy") RealocarAoDesativarStrategy realocarAoDesativarStrategy) {
         this.guicheRepository = guicheRepository;
         this.buscarMelhorGuicheStrategy = buscarMelhorGuicheStrategy;
         this.realocarAoAtivarStrategy = realocarAoAtivarStrategy;

@@ -23,7 +23,7 @@ public class SenhaServiceImpl implements SenhaService {
     @Autowired
     public SenhaServiceImpl(SenhaRepository senhaRepository,
                             PessoaService pessoaService,
-                            @Qualifier("clinicaGuicheService") GuicheService guicheService) {
+                            @Qualifier("guicheServiceImpl") GuicheService guicheService) {
         this.senhaRepository = senhaRepository;
         this.pessoaService = pessoaService;
         this.guicheService = guicheService;

@@ -23,59 +23,75 @@
         <div class="row">
             <div class="col-md-12" style="height: 100%;">
                 <br>
-                <h2>Guichês <span style="position: relative; left: 70%;"><button type="button" data-toggle="modal"
+                <h2>Guichês <span style="position: relative; left: 75%;"><button type="button" data-toggle="modal"
                             data-target="#exampleModal" class="btn btn-primary">
                             Cadastrar guichê</button></span></h2>
                 <br>
-                <table class="table table-bordered table-hover">
+                <table id="table-guiches" class="table table-bordered table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Ações</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td style="width: 70%">Guichê 1</td>
-                            <td><button type="button" class="btn btn-success">
-                                    Ativar</button>
-                                <button type="button" class="btn btn-danger">
-                                    Desativar</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Guichê 1</td>
-                            <td><button type="button" class="btn btn-success">
-                                    Ativar</button>
-                                <button type="button" class="btn btn-danger">
-                                    Desativar</button></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        <br>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <form id="form-guiche">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cadastrar guichê</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nomeguiche">Nome do guichê</label>
+                            <input type="text" class="form-control" id="nomeguiche" placeholder="Nome" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="versenhas" tabindex="-1" role="dialog" aria-labelledby="versenhasLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cadastrar guichê</h5>
+                    <h5 class="modal-title" id="versenhasLabel">Senhas</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="nomeguiche">Nome do guichê</label>
-                        <input type="text" class="form-control" id="nomeguiche" placeholder="Nome">
-                    </div>
+                    <table id="table-senhas" class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Pessoa</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -85,7 +101,102 @@
     </nav>
 
     <script type="text/javascript">
-
+        const url = 'http://localhost:8080/';
+        $('#form-guiche').submit(function () {
+            console.log("Cadastrando guichê");
+            const data = {
+                ativo: true,
+                nome: $("#nomeguiche").val()
+            }
+            axios.post(url + "guiches/", data)
+                .then(function (res) {
+                    const { id, status } = res.data;
+                    $("#nomeguiche").val(null);
+                    console.log(res);
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao cadastrar guichê");
+                });
+            return false;
+        });
+        function verSenhas(senhas) {
+            $("#versenhas").modal('show');
+            if (senhas) {
+                const table = $("#table-senhas");
+                table.find("tr:gt(0)").remove();
+                var id = $('#versenhas tr').each(function () { $(this).find("td").text()[0]; });
+                if (id.length === 1) {
+                    senhas.forEach(element => {
+                        table.append(`
+                            <tr>
+                                <td>${element.id}</td>
+                                <td style="width: 70%">${element.pessoa.nome}</td>
+                                <td style="width: 70%">${element.status}</td>
+                            </tr>
+                        `);
+                    });
+                }
+            }
+        }
+        function ativarGuiche(id) {
+            axios.put(url + "guiches/" + id + "/ativar")
+                .then(function (res) {
+                    alert("Guichê ativado");
+                    console.log(res);
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao ativar guichê");
+                });
+        }
+        function desativarGuiche(id) {
+            axios.put(url + "guiches/" + id + "/desativar")
+                .then(function (res) {
+                    alert("Guichê desativado");
+                    console.log(res);
+                    location.reload();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao desativar guichê");
+                });
+        }
+        function listar() {
+            axios.get(url + "guiches/")
+                .then(function (res) {
+                    console.log(res.data);
+                    const table = $("#table-guiches");
+                    res.data.forEach(element => {
+                        table.append(`
+                            <tr>
+                                <td>${element.id}</td>
+                                <td style="width: 70%">${element.nome}</td>
+                                <td>
+                                    ${ element.ativo ? `
+                                        <button type="button" class="btn btn-danger" onclick='desativarGuiche(${element.id})'>
+                                        Desativar</button>
+                                    ` : `
+                                    <button type="button" class="btn btn-success" onclick='ativarGuiche(${element.id})'>
+                                        Ativar</button>
+                                    `}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-success" onclick='verSenhas(${JSON.stringify(element.senhas)})'>
+                                        Ver Senhas</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao listar guichês");
+                });
+        }
+        listar();
     </script>
 </body>
 

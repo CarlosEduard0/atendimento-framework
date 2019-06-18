@@ -4,15 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
@@ -21,8 +19,7 @@
     <nav class="navbar navbar-dark bg-dark">
         <span class="navbar-brand mb-0 h1">Atendimento Clínica</span>
         <form class="form-inline">
-            <a class="btn btn-outline-success my-2 my-sm-0" style="color:white"
-                href="gerenciamento.html">Gerenciamento</a>
+            <a class="btn btn-outline-success my-2 my-sm-0" style="color:white" href="gerenciamento.html">Gerenciamento</a>
         </form>
     </nav>
     <div class="container">
@@ -45,10 +42,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="cpf">CPF</label>
-                                            <input type="text" pattern="^([0-9]{3}\.?){3}-?[0-9]{2}$"
-                                                class="form-control" id="cpf"
-                                                title="Digite um CPF no formato: xxx.xxx.xxx-xx" placeholder="CPF"
+                                            <input type="text" pattern="^([0-9]{3}\.?){3}-?[0-9]{2}$" class="form-control"
+                                                id="cpf" title="Digite um CPF no formato: xxx.xxx.xxx-xx" placeholder="CPF"
                                                 required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="select-tiposServicos">Tipo de serviço</label>
+                                            <select class="form-control" id="select-tiposServicos" required>
+                                            </select>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-lg" style="width: 100%">Retirar
                                             senha</button>
@@ -61,30 +62,30 @@
                         <br>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center align-items-center" id="senha-div"
-                    style="text-align: center; color: white; display: block;">
+                <div class="justify-content-center align-items-center" id="senha-div" style="text-align: center; color: white; display: none !important;">
                     <h3 id="senha"></h3>
-                    <button type="button" id="reload" class="btn btn-warning btn-lg"
-                        onclick="reload()">Atualizar</button>
+                    <button type="button" id="reload" class="btn btn-warning btn-lg" onclick="reload()">Atualizar</button>
                 </div>
             </div>
         </div>
     </div>
-    <nav class="navbar fixed-bottom navbar-dark bg-dark"
-        style="display: block; text-align: center; color: white; height: 40px">
+    <nav class="navbar fixed-bottom navbar-dark bg-dark" style="display: block; text-align: center; color: white; height: 40px">
         <p>© PEG softwares</p>
     </nav>
 
     <script type="text/javascript">
-        const url = 'http://localhost:8080/senhas';
+        const url = 'http://localhost:8080/';
         $('form').submit(function () {
             const data = {
                 pessoa: {
                     cpf: $("#cpf").val(),
                     nome: $("#nome").val()
+                },
+                tipoServico: {
+                    id: $("#select-tiposServicos").val()
                 }
             }
-            axios.post(url, data)
+            axios.post(url + 'senhas/', data)
                 .then(function (res) {
                     const { id, status } = res.data;
                     $("#cpf").val(null);
@@ -102,6 +103,21 @@
         $('#reload').click(function () {
             location.reload();
         });
+        function listarTipos() {
+            axios.get(url + "tiposServicos/")
+                .then(function (res) {
+                    console.log(res.data);
+                    const select = $("#select-tiposServicos");
+                    res.data.forEach(element => {
+                        select.append(`<option value='${element.id}'>${element.descricao}</option>`);
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("Error: Erro ao listar tipos");
+                });
+        }
+        listarTipos();
     </script>
 </body>
 

@@ -33,7 +33,7 @@
                                 <h3 class="card-title">Retire sua senha aqui!</h3>
                             </div>
                             <div class="modal-body">
-                                <form onsubmit="retirarSenha()">
+                                <form>
                                     <div id="form-cpf">
                                         <div class="form-group">
                                             <label for="nome">Nome</label>
@@ -55,10 +55,11 @@
                             <br>
                         </div>
                         <br>
-                        <div id="senha-div" style="text-align: center; color: white; display: none;">
-                            <h3 id="senha"></h3>
-                        </div>
                     </div>
+                </div>
+                <div class="justify-content-center align-items-center" id="senha-div" style="text-align: center; color: white; display: none !important;">
+                    <h3 id="senha"></h3>
+                    <button type="button" id="reload" class="btn btn-warning btn-lg" onclick="reload()">Atualizar</button>
                 </div>
             </div>
         </div>
@@ -69,7 +70,7 @@
 
     <script type="text/javascript">
         const url = 'http://localhost:8080/senhas';
-        function retirarSenha() {
+        $('form').submit(function () {
             const data = {
                 pessoa: {
                     cpf: $("#cpf").val(),
@@ -83,11 +84,17 @@
                     $("#nome").val(null);
                     $("#senha-div").show();
                     $("#senha").text(`Senha: ${id} - ${status}`);
+                    console.log(res);
                 })
                 .catch(function (error) {
-                    alert("Error: CPF inválido")
+                    console.log(error);
+                    alert("Error: CPF inválido");
                 });
-        }
+            return false;
+        });
+        $('#reload').click(function () {
+            location.reload();
+        });
     </script>
 </body>
 
