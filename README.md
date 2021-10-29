@@ -1,5 +1,5 @@
 # atendimento-framework
-Framework para gerenciar atendimentos
+Framework para gerenciar atendimentos na disciplina de Projeto detalhado de Software
 
 ## Diagrama de Classes
 ![Diagrama de classes](https://user-images.githubusercontent.com/30722229/59472634-7df24e80-8e15-11e9-8cef-27149c9131f0.png)
